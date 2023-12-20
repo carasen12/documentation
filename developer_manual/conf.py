@@ -44,7 +44,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Nextcloud %s Developer Manual' % (version)
+project = f'Nextcloud {version} Developer Manual'
 #copyright = u'2012-2017, The Nextcloud developers'
 
 # The version info for the project you're documenting, acts as replacement for

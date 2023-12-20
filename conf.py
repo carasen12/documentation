@@ -5,13 +5,13 @@ import os, sys, datetime
 import sphinx_rtd_theme
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-sys.path.insert(0, os.path.abspath(dir_path + '/_ext'))
+sys.path.insert(0, os.path.abspath(f'{dir_path}/_ext'))
 now = datetime.datetime.now()
 
 extensions = ['sphinx_rtd_theme', 'sphinx_rtd_dark_mode']
 
 # General information about the project.
-copyright = str(now.year) + ' Nextcloud GmbH'
+copyright = f'{now.year} Nextcloud GmbH'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -33,7 +33,7 @@ html_theme_options = {
 html_logo = "../_shared_assets/static/logo-white.png"
 
 # substitutions go here
-rst_epilog =  '.. |version| replace:: %s' % version
+rst_epilog = f'.. |version| replace:: {version}'
 
 # building the versions list
 version_start = 26		# THIS IS THE SUPPORTED VERSION NUMBER
@@ -44,28 +44,31 @@ version_stable = 28		# INCREASE THIS NUMBER TO THE LATEST STABLE VERSION NUMBER
 def generateVersionsDocs(current_docs):
 	versions_doc = []
 	for v in range(version_start, version_stable + 1):
-		url = 'https://docs.nextcloud.com/server/%s/%s' % (str(v), current_docs)
-		versions_doc.append(tuple((v, url)))
-	versions_doc.append(tuple(('stable', 'https://docs.nextcloud.com/server/%s/%s' % ('stable', current_docs))))
-	versions_doc.append(tuple(('latest', 'https://docs.nextcloud.com/server/%s/%s' % ('latest', current_docs))))
+		url = f'https://docs.nextcloud.com/server/{str(v)}/{current_docs}'
+		versions_doc.append((v, url))
+	versions_doc.extend(
+		(
+			(
+				'stable',
+				f'https://docs.nextcloud.com/server/stable/{current_docs}',
+			),
+			(
+				'latest',
+				f'https://docs.nextcloud.com/server/latest/{current_docs}',
+			),
+		)
+	)
 	return versions_doc
 
-if version.isdigit():
-	github_branch = 'stable%s' % version
-else:
-	github_branch = 'master'
-
+github_branch = f'stable{version}' if version.isdigit() else 'master'
 html_context = {
 	'current_version': version,
 	'READTHEDOCS': True,
 	'extra_css_files': ['_static/custom.css'],
-
-	# force github plugin
 	'display_github': True,
 	'github_user': 'nextcloud',
 	'github_repo': 'documentation',
-	# If current version is an int, use the stablexxx branches, otherwise, edit on master
-	'theme_vcs_pageview_mode': 'edit/%s/' % github_branch, # to be completed by each individual conf.py
+	'theme_vcs_pageview_mode': f'edit/{github_branch}/',
 }
 
 edit_on_github_project = 'nextcloud/documentation'

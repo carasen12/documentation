@@ -32,7 +32,9 @@ def html_page_context(app, pagename, templatename, context, doctree):
         warnings.warn("current_docs not specified")
         return
 
-    path = app.config.current_docs + '/' + os.path.relpath(doctree.get('source'), app.builder.srcdir)
+    path = f'{app.config.current_docs}/' + os.path.relpath(
+        doctree.get('source'), app.builder.srcdir
+    )
     show_url = get_github_url(app, 'blob', path)
     edit_url = get_github_url(app, 'edit', path)
 

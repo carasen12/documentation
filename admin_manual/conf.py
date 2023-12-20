@@ -53,7 +53,7 @@ master_doc = 'contents'
 #release = '12'
 
 # General information about the project.
-project = u'Nextcloud %s Administration Manual' % (version)
+project = f'Nextcloud {version} Administration Manual'
 #copyright = u'2012-2017, The Nextcloud developers'
 
 
